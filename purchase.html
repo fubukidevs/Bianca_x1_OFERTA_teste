@@ -1,51 +1,114 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Redirecionamento</title>
- <!-- Meta Pixel Code -->
- <script>
-   !function(f,b,e,v,n,t,s) 
-   {if(f.fbq)return;n=f.fbq=function(){n.callMethod? 
-   n.callMethod.apply(n,arguments):n.queue.push(arguments)}; 
-   if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0'; 
-   n.queue=[];t=b.createElement(e);t.async=!0; 
-   t.src=v;s=b.getElementsByTagName(e)[0]; 
-   s.parentNode.insertBefore(t,s)}(window, document,'script', 
-   'https://connect.facebook.net/en_US/fbevents.js'); 
-   fbq('init', '1481920043145617'); 
- </script>
- <noscript><img height="1" width="1" style="display:none" 
-   src="https://www.facebook.com/tr?id=1481920043145617&ev=PageView&noscript=1" 
- /></noscript>
- <!-- End Meta Pixel Code -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirmando seu acesso...</title>
+  
+  <!-- Meta Pixel Code -->
+  <script>
+    !function(f,b,e,v,n,t,s) 
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod? 
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)}; 
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0'; 
+    n.queue=[];t=b.createElement(e);t.async=!0; 
+    t.src=v;s=b.getElementsByTagName(e)[0]; 
+    s.parentNode.insertBefore(t,s)}(window, document,'script', 
+    'https://connect.facebook.net/en_US/fbevents.js'); 
+    fbq('init', '1481920043145617'); 
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none" 
+    src="https://www.facebook.com/tr?id=1481920043145617&ev=PageView&noscript=1" 
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+  
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f2f5;
+    }
+    .container {
+      text-align: center;
+    }
+    .checkmark {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      display: block;
+      stroke-width: 2;
+      stroke: #4CAF50;
+      stroke-miterlimit: 10;
+      margin: 10% auto;
+      box-shadow: inset 0px 0px 0px #4CAF50;
+      animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+    }
+    .checkmark__check {
+      transform-origin: 50% 50%;
+      stroke-dasharray: 48;
+      stroke-dashoffset: 48;
+      animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+    }
+    @keyframes stroke {
+      100% { stroke-dashoffset: 0; }
+    }
+    @keyframes scale {
+      0%, 100% { transform: none; }
+      50% { transform: scale3d(1.1, 1.1, 1); }
+    }
+    @keyframes fill {
+      100% { box-shadow: inset 0px 0px 0px 30px #4CAF50; }
+    }
+  </style>
 </head>
 <body>
- <p style="text-align: center; margin-top: 50px;">Aguarde, em 2 segundos você será redirecionado</p>
- <script>
-   // Checar se o evento "Initiate Checkout" já foi registrado no localStorage
-   const hasTrackedCheckout = localStorage.getItem('hasTrackedCheckout');
-   if (!hasTrackedCheckout) {
-     // Registrar o evento Initiate Checkout no Meta Pixel
-     fbq('track', 'InitiateCheckout', {value: '14.90', currency: 'BRL'});
-     // Marcar no localStorage que o evento foi registrado
-     localStorage.setItem('hasTrackedCheckout', 'true');
-   }  
- 
-   // Checar se o evento "Purchase" já foi registrado no localStorage
-   const hasTrackedPurchase = localStorage.getItem('hasTrackedPurchase');
-   if (!hasTrackedPurchase) {
-     // Registrar o evento de compra no Meta Pixel
-     fbq('track', 'Purchase', {value: '14.90', currency: 'BRL'});
-     // Marcar no localStorage que o evento foi registrado
-     localStorage.setItem('hasTrackedPurchase', 'true');
-   }
-   
-   // Redirecionar para o canal VIP após 2 segundos
-   setTimeout(function() {
-     window.location.href = "https://t.me/+AWbTGD-Zpcw0YmM5";
-   }, 2000);
- </script>
+  <div class="container">
+    <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+      <circle cx="26" cy="26" r="25" fill="none"/>
+      <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+    </svg>
+    <h2>Acesso confirmado!</h2>
+    <p>Redirecionando para o grupo VIP...</p>
+  </div>
+
+  <script>
+    // Verificar se já foi rastreado nesta sessão
+    const hasTrackedCheckout = sessionStorage.getItem('hasTrackedCheckout');
+    const hasTrackedPurchase = sessionStorage.getItem('hasTrackedPurchase');
+    
+    // Dados completos do produto
+    const productData = {
+      content_name: 'Acesso VIP Telegram',
+      content_ids: ['VIP_TELEGRAM_001'],
+      content_type: 'product',
+      num_items: 1,
+      value: 14.90,
+      currency: 'BRL'
+    };
+    
+    // InitiateCheckout
+    if (!hasTrackedCheckout) {
+      fbq('track', 'InitiateCheckout', productData);
+      sessionStorage.setItem('hasTrackedCheckout', 'true');
+    }
+    
+    // Purchase (com pequeno delay para garantir ordem)
+    setTimeout(() => {
+      if (!hasTrackedPurchase) {
+        fbq('track', 'Purchase', productData);
+        sessionStorage.setItem('hasTrackedPurchase', 'true');
+      }
+      
+      // Aguardar mais um pouco e redirecionar
+      setTimeout(() => {
+        window.location.replace("https://t.me/+AWbTGD-Zpcw0YmM5");
+      }, 1500);
+    }, 500);
+  </script>
 </body>
 </html>
